@@ -1,0 +1,28 @@
+package com.selproject.webdriver;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+/**
+ * This test been removed from scope because login functionality moved to Utilities.WordpressTest class
+ */
+public class LoginTests extends WordpressTest {
+
+    //this smoke-test checks if we can login
+    @Test
+    public void LoginTest()
+    {
+//        FirstTest test = new FirstTest();
+//        test.driverIsTheKing();
+        //Driver.Initialize();
+//        LoginPage.GoTo();
+//        LoginPage.LoginAs("admin").WithPassword("password").Login();
+        //Assert.assertTrue("Failed to login.", DashboardPage.IsAt());
+        //cleanUp();
+    }
+
+    //public static void cleanUp()
+    {
+        Driver.close();
+    }
+}
