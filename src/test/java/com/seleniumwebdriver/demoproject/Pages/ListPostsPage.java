@@ -53,9 +53,8 @@ public class ListPostsPage {
     }
 
     public static void trashPost(String title) {
-//        TODO: test negative case
         makeSureIsAt("Posts");
-        Boolean postRemoved = false;
+//        Boolean postRemoved = false;
         try {
             List<WebElement> allPosts = Driver.Instance.findElements(By.tagName("tr")); //get all posts in the list
             for (WebElement row : allPosts) {//find a post with specified title to trash
@@ -67,11 +66,11 @@ public class ListPostsPage {
                     action.perform();
                     Driver.Wait(2000);
                     row.findElement(By.className("submitdelete")).click();
-                    postRemoved = true;
+//                    postRemoved = true;
                     //find message that post deleted. If not found, then message has not been deleted: fail test
                     //WebElement removedMessage = Driver.Instance.findElement(By.id("message"));
 //                  if (removedMessage!=null) postRemoved=true;
-                    return;
+                    return; //end method when post removed
                 }
             } //should this exception be Runtime or another type??? which is checked and which is unchecked?
         }
@@ -83,7 +82,7 @@ public class ListPostsPage {
 //        catch (NoSuchElementException e) {
 //            System.err.println("No post been deleted during trashPost. 1");
 //        }
-        if(!postRemoved) System.err.println("No post been deleted during trashPost.");
+        System.err.println("No post been deleted during trashPost."); //this line executed only if no post found to delete in try block
     }
 
     public static void refreshPostsCounter() {
