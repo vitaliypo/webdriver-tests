@@ -1,7 +1,7 @@
 package com.seleniumwebdriver.demoproject.Navigation;
 
 /**
- * Class implements left menu navigation
+ * Class implements left menu navigation (high-level)
  */
 
 public class LeftNavigation {

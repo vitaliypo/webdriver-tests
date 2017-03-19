@@ -14,35 +14,25 @@ import java.util.List;
 public class ListPostsPage {
     private static int previousPostCount;
     private static int currentPostCount;
-//    public enum PostType {
-//        Posts, Page
-//    }
 
     public static void selectByTitle(String contentType, String title) {
-//        String currentLocation=contentType+"s"; //unite these two rows to one
         makeSureIsAt(contentType+"s");
         WebElement link = Driver.Instance.findElement(By.linkText(title));
         link.click();
     }
 
+    //method checks that current location is Posts or Pages (depends on passed expectedLocation value)
     private static void makeSureIsAt(String expectedLocation) {
-//        System.out.println("run makeSureIsAt");
         WebElement currentPageHeader = Driver.Instance.findElement(By.tagName("h1"));
-//        System.out.println("element located");
-//        Driver.Wait(10);
-//        System.out.println(currentPageHeader.getText());
-        if (currentPageHeader.getText().equals(expectedLocation)) { // are we already on expected page?
-//            System.out.println("1st if");
+        if (currentPageHeader.getText().equals(expectedLocation)) { // are we already at the expected page?
             return;
         }
-        else {  // if we're not at desired location we'll navigate there here:
+        else {  // if we're not at desired location we'll navigate there:
             if (expectedLocation.equals("Pages")) {
                 LeftNavigation.Pages.AllPages.select();
-//                System.out.println("2nd if");
             }
             else if (expectedLocation.equals("Posts")) {
                 LeftNavigation.Posts.AllPosts.select();
-//                System.out.println("3rd if");
             }
         }
     }
@@ -54,37 +44,29 @@ public class ListPostsPage {
 
     public static void trashPost(String title) {
         makeSureIsAt("Posts");
-//        Boolean postRemoved = false;
         try {
-            List<WebElement> allPosts = Driver.Instance.findElements(By.tagName("tr")); //get all posts in the list
+            List<WebElement> allPosts = Driver.Instance.findElements(By.tagName("tr")); //get all posts to the list
             for (WebElement row : allPosts) {//find a post with specified title to trash
-                List<WebElement> postsWithDesiredTitle = null;
-                postsWithDesiredTitle = row.findElements(By.linkText(title)); //unite these two expressions?
-                if (postsWithDesiredTitle.size()>0) {
+                List<WebElement> postsWithDesiredTitle = row.findElements(By.linkText(title));
+                if (postsWithDesiredTitle.size()>0) { //remove found post
                     Actions action = new Actions(Driver.Instance);
                     action.moveToElement(postsWithDesiredTitle.get(0));
                     action.perform();
                     Driver.Wait(2000);
                     row.findElement(By.className("submitdelete")).click();
-//                    postRemoved = true;
-                    //find message that post deleted. If not found, then message has not been deleted: fail test
-                    //WebElement removedMessage = Driver.Instance.findElement(By.id("message"));
-//                  if (removedMessage!=null) postRemoved=true;
-                    return; //end method when post removed
+                    return; //exit method when post removed
                 }
-            } //should this exception be Runtime or another type??? which is checked and which is unchecked?
+            }
         }
         catch (StaleElementReferenceException e) {
             System.err.println("Something changed on a page during removal. Retrying trashPost...");
             trashPost(title);
             return;
         }
-//        catch (NoSuchElementException e) {
-//            System.err.println("No post been deleted during trashPost. 1");
-//        }
         System.err.println("No post been deleted during trashPost."); //this line executed only if no post found to delete in try block
     }
 
+    //update previousPostCount and currentPostCount with fresh values if any changes exist
     public static void refreshPostsCounter() {
         makeSureIsAt("Posts");
         int tempCurrentCounter = getCounter(); //get current quantity of posts
@@ -94,15 +76,15 @@ public class ListPostsPage {
         }
     }
 
+//    helper method for refreshPostCount
     private static int getCounter() {
         String countText = Driver.Instance.findElement(By.className("displaying-num")).getText();
         try {
-            return Integer.parseInt(countText.replaceAll("[\\D]", ""));
+            return Integer.parseInt(countText.replaceAll("[\\D]", "")); //extract only digits and return it
         }
         catch (NumberFormatException E) {
-            return 0;
+            return 0; //return zero in case if there is no posts (and post counter as well)
         }
-        //clarify how this magic regex works
     }
 
     public static int getPreviousPostCount() {
@@ -113,6 +95,7 @@ public class ListPostsPage {
         return currentPostCount;
     }
 
+//    method to search posts with search box
     public static void searchPostByKeyword(String searchKeyword) {
         makeSureIsAt("Posts");
         WebElement searchBox = Driver.Instance.findElement(By.id("post-search-input"));

@@ -34,6 +34,7 @@ public class NewPostPage {
         return Driver.Instance.findElement(By.tagName("h1")).getText().contains("Edit ");
     }
 
+//    class implements high-level post creation functionality
     public static class CreatePostCommand {
         private String title;
         private String body;

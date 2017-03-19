@@ -6,7 +6,7 @@ import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 
 /**
- * This class implements selection of points for navigation
+ * This class implements selection of points in left menu navigation
  */
 public class MenuSelector {
     public static void select(String topLevelMenuId, String subMenuLinkText) {
