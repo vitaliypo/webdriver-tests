@@ -24,13 +24,14 @@ public class NewPostPage {
         return new CreatePostCommand(title);
     }
 
-    public static void GoToNewPost() {
+//    TODO: use view instead of edit mode.
+    public static void goToNewPost() {
         WebElement message = Driver.Instance.findElement(By.id("message"));
         List<WebElement> links = message.findElements(By.tagName("a"));
         links.get(0).click();
     }
 
-    public static boolean IsInEditMode() {
+    public static boolean isInEditMode() {
         return Driver.Instance.findElement(By.tagName("h1")).getText().contains("Edit ");
     }
 

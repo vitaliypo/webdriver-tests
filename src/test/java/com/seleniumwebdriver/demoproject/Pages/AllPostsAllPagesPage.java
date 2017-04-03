@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Implements actions related to "All Posts" and "All Pages" pages
  */
-public class ListPostsPage {
+public class AllPostsAllPagesPage {
     private static int previousPostCount;
     private static int currentPostCount;
 

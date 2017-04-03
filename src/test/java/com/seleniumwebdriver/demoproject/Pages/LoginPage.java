@@ -12,7 +12,7 @@ public class LoginPage {
 
     public static LoginCommand loginAs(String userName){
         return new LoginCommand(userName);
-//        return LoginCommand;
+//        return LoginCommand; TODO: cleanup comment here
     }
 }
 

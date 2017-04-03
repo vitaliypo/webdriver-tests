@@ -15,7 +15,7 @@ public class CreatePostTest extends WordpressTest {
     public void CreatePostTest()
     {
         PostCreator.createPost();
-        NewPostPage.GoToNewPost();
+        NewPostPage.goToNewPost();
         Assert.assertEquals("Title not matched.", PostCreator.lastTitle, PostPage.getCurrentPostTitle());
     }
 }
